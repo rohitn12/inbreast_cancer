@@ -1,0 +1,50 @@
+# Contains the path to the directory or file to process
+path: /usr/mvl2/knfdt/cancer_detection/data/
+# contains the path to save the model and log file
+save_path : /usr/mvl2/knfdt/cancer_detection/src/runs/
+classification:
+  # enable/disable UNet prediction
+  state: True
+  # Trained model name [efficient_net, convnext, resnet34]
+  model_name: "resnet34"
+  # "best" refers to best performing on the val set (recommended), alternatively "last" refers to the last version before interruption
+  version: best
+
+
+segmentation:
+  # enable/disable UNet prediction
+  state: False
+  # Trained model name [Unet, Unet++, FPN, PSPNet  ]
+  architecture: "Unet"
+  # encoder for segmentation [resnet34,resnet18,resnet50,resnet101]
+  encoder: resnet34
+  # classification head along with segmentation using the same encoder
+  loss : 'focal'
+  # creates an auxilarily branch from the encoder to train on the classification labels 
+  classification: False
+  # "best" refers to best performing on the val set (recommended), alternatively "last" refers to the last version before interruption
+  version: best
+
+# not supported currently
+hybrid:
+  # enable/disable UNet prediction
+  state: True
+  # Trained model name [efficient_net, vision_transformer, swin_transformer, convnext]
+  classifier_model_name: "efficient_net"
+  # segemntation model to extract features 
+  segmentation_model_name: "efficient_net"
+  # "best" refers to best performing on the val set (recommended), alternatively "last" refers to the last version before interruption
+  version: best
+
+# 
+model:
+  lr : 0.01
+  optimizer : adam
+  n_classes : 1
+  n_classes_seg : 2
+  in_channels : 1
+  n_classes_classification : 3
+  epoch : 500
+  batch_size : 8 
+  train : True
+
